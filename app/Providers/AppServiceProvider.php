@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Jobs\ApiGet;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
