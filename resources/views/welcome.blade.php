@@ -22,9 +22,12 @@
 
     </head>
     <body class="antialiased">
-        <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; row-gap: 15px;" class="relative min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
 
-            <button class="async-button" type="button" style="width: 100px; height: 30px; background-color: white; color: black">Make request</button>
+            <button class="a-sync-button" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Async</b> request</button>
+            <button class="sync-button" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Sync</b> request</button>
+
+            <div></div>
 
         </div>
     </body>

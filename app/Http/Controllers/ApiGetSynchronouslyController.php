@@ -7,7 +7,7 @@
 
 use Illuminate\Support\Facades\Http;
 
-class ApiGetController
+class ApiGetSynchronouslyController
     {
         public function __invoke() {
 
@@ -16,10 +16,14 @@ class ApiGetController
                 "Authorization" => "auZTe7rY3pgsoz3IiF4NkuiCllqhmfJE6OeGqzDDqISsmMjWINUN3gJT"
             ])->get('https://api.pexels.com/v1/search?query=people');
 
+            $images = [];
+
             foreach ($response['photos'] as $photo) {
-                \App\Jobs\ApiGet::dispatch($photo['src']['tiny']);
+                $images []= Http::withHeaders([
+                    'Authorization' => 'auZTe7rY3pgsoz3IiF4NkuiCllqhmfJE6OeGqzDDqISsmMjWINUN3gJT'
+                ])->get($photo['src']['original']);
             }
 
-            return "test apiget";
+            return $images;
         }
     }

@@ -14,15 +14,14 @@ class getApiEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public string $message;
+    public $imageSrc;
 
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct($imageSrc)
     {
-        info("__construct event test");
-        $this->message = "test message";
+        $this->imageSrc = $imageSrc;
     }
 
     /**
@@ -32,14 +31,6 @@ class getApiEvent implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-//        return [
-//            new Channel('getApiChannel'),
-//        ];
         return ['getApiChannel'];
     }
-
-//    public function broadcastAs()
-//    {
-//        return 'getApiEvent';
-//    }
 }

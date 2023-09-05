@@ -17,30 +17,33 @@ class ApiGet implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $message;
+    public $imageSrc;
 
     /**
      * Create a new job instance.
      */
-    public function __construct()
+    public function __construct($photoUrl)
     {
-        info("__constructor job log");
-        $this->message = "test api get job";
+        $this->imageSrc = Http::withHeaders([
+            'Authorization' => 'auZTe7rY3pgsoz3IiF4NkuiCllqhmfJE6OeGqzDDqISsmMjWINUN3gJT'
+        ])->get($photoUrl);
+
+        info($this->imageSrc);
     }
 
     /**
      * Execute the job.
      */
-    public function handle(): string
+    public function handle()
     {
-        info("handle job log");
-//        \App\Events\getApiEvent::dispatch();
+        \App\Events\getApiEvent::dispatch($this->imageSrc);
+        return 0;
 
-        event(new getApiEvent());
+//        event(new getApiEvent());
 
 //        $response = Http::get("api.coincap.io/v2/assets");
 //        event(new getApi());
 //            return $response->json();
-        return $this->message;
+//        return $this->imageSrc;
     }
 }
