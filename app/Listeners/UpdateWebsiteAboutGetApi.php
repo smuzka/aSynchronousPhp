@@ -19,8 +19,8 @@ class UpdateWebsiteAboutGetApi
     /**
      * Handle the event.
      */
-    public function handle(getApiEvent $event): void
+    public function handle(): void
     {
-        info("log Test");
+        info("handle listener log");
     }
 }

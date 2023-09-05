@@ -24,7 +24,7 @@ class ApiGet implements ShouldQueue
      */
     public function __construct()
     {
-        info("__constructor log");
+        info("__constructor job log");
         $this->message = "test api get job";
     }
 
@@ -33,8 +33,10 @@ class ApiGet implements ShouldQueue
      */
     public function handle(): string
     {
-        info("handle log");
-        \App\Events\getApiEvent::dispatch();
+        info("handle job log");
+//        \App\Events\getApiEvent::dispatch();
+
+        event(new getApiEvent());
 
 //        $response = Http::get("api.coincap.io/v2/assets");
 //        event(new getApi());

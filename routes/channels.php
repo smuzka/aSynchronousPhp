@@ -7,6 +7,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('getApi', function () {
+Broadcast::channel('getApiChannel', function () {
     return true;
 });

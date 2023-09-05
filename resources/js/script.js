@@ -8,8 +8,8 @@ addEventListener("load", () => {
         // console.log(translation);
     })
 
-    Echo.channel('getApi')
-        .listen('getApi', (e) => {
+    Echo.channel('getApiChannel')
+        .listen('getApiEvent', (e) => {
             alert("test echo");
             console.log(e);
         })

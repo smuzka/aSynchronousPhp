@@ -20,9 +20,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        getApiEvent::class => [
-            UpdateWebsiteAboutGetApi::class,
-        ]
+//        getApiEvent::class => [
+//            UpdateWebsiteAboutGetApi::class,
+//        ],
     ];
 
     /**

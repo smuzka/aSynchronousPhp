@@ -7,22 +7,21 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class getApiEvent implements ShouldBroadcastNow
+class getApiEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $message;
+    public string $message;
 
     /**
      * Create a new event instance.
      */
     public function __construct()
     {
-        info("Event test");
+        info("__construct event test");
         $this->message = "test message";
     }
 
@@ -33,8 +32,14 @@ class getApiEvent implements ShouldBroadcastNow
      */
     public function broadcastOn(): array
     {
-        return [
-            new Channel('getApi'),
-        ];
+//        return [
+//            new Channel('getApiChannel'),
+//        ];
+        return ['getApiChannel'];
     }
+
+//    public function broadcastAs()
+//    {
+//        return 'getApiEvent';
+//    }
 }
