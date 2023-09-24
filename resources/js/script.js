@@ -9,13 +9,12 @@ addEventListener("load", () => {
         asyncTimeStart = Date.now();
     })
 
-
     Echo.channel('getApiChannel')
         .listen('getApiEvent', (e) => {
             console.log(e);
             imagesCounter++;
             if (imagesCounter === 15) {
-                console.log(Date.now() - asyncTimeStart);
+                console.log("Asynchronous get: " + (Date.now() - asyncTimeStart) / 1000 + "s");
             }
         })
 
@@ -26,6 +25,16 @@ addEventListener("load", () => {
         const response = await fetch("getApiSynchronously");
         const data = await response.json();
         console.log(data);
-        console.log(Date.now() - syncTimeStart);
+        console.log("Synchronous get: " + (Date.now() - syncTimeStart) / 1000 + "s");
+    })
+
+    const promisesButton = document.querySelector(".promises-button");
+    let promisesTimeStart = Date.now();
+    promisesButton?.addEventListener("click", async () => {
+        promisesTimeStart = Date.now();
+        const response = await fetch("getApiPromises");
+        const data = await response.json();
+        console.log(data);
+        console.log("Promises get: " + (Date.now() - promisesTimeStart) / 1000 + "s");
     })
 })

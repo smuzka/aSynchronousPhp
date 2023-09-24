@@ -26,6 +26,7 @@
 
             <button class="a-sync-button" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Async</b> request</button>
             <button class="sync-button" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Sync</b> request</button>
+            <button class="promises-button" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Promises</b> request</button>
 
             <div></div>
 
