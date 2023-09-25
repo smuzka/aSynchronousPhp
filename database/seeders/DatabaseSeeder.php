@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Employee;
-use App\Models\Office;
+use App\Models\OrderDetail;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,6 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Employee::factory(1000)->create();
+        OrderDetail::factory(10000)->create();
     }
 }
