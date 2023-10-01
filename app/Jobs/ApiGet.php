@@ -27,8 +27,6 @@ class ApiGet implements ShouldQueue
         $this->imageSrc = Http::withHeaders([
             'Authorization' => 'auZTe7rY3pgsoz3IiF4NkuiCllqhmfJE6OeGqzDDqISsmMjWINUN3gJT'
         ])->get($photoUrl);
-
-        info($this->imageSrc);
     }
 
     /**
@@ -38,12 +36,5 @@ class ApiGet implements ShouldQueue
     {
         \App\Events\getApiEvent::dispatch($this->imageSrc);
         return 0;
-
-//        event(new getApiEvent());
-
-//        $response = Http::get("api.coincap.io/v2/assets");
-//        event(new getApi());
-//            return $response->json();
-//        return $this->imageSrc;
     }
 }

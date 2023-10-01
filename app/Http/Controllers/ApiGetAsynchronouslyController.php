@@ -7,7 +7,7 @@
 
 use Illuminate\Support\Facades\Http;
 
-class ApiGetController
+class ApiGetAsynchronouslyController
     {
         public function __invoke() {
 

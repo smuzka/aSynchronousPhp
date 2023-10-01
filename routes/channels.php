@@ -10,3 +10,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('getApiChannel', function () {
     return true;
 });
+
+Broadcast::channel('getDBChannel', function () {
+    return true;
+});
