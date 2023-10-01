@@ -27,6 +27,7 @@
                 <h1 style="color: white; font-size: 24px; font-weight: 600;">API requests</h1>
                 <button class="a-sync-button-api" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Async</b> request</button>
                 <button class="sync-button-api" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Sync</b> request</button>
+                <button class="promises-button-api" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Promises</b> request</button>
 
                 <h1 style="color: white; font-size: 24px; margin-top: 50px; font-weight: 600;">Database queries requests</h1>
                 <button class="a-sync-button-db" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Async</b> request</button>

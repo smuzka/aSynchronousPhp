@@ -34,6 +34,18 @@ addEventListener("load", () => {
         })
     }
 
+    const PromisesApiHandler = () => {
+        const promisesButton = document.querySelector(".promises-button");
+        let promisesTimeStart = Date.now();
+        promisesButton?.addEventListener("click", async () => {
+            promisesTimeStart = Date.now();
+            const response = await fetch("getApiPromises");
+            const data = await response.json();
+            console.log(data);
+            console.log("Promises get: " + (Date.now() - promisesTimeStart) / 1000 + "s");
+        })
+    }
+
     const AsynchronousDBHandler = () => {
         const DBAsyncButton = document.querySelector(".a-sync-button-db")
         let queryCounter = 0;
