@@ -11,6 +11,8 @@ Route::get('/getDBAsynchronously', "App\\Http\\Controllers\\DBGetAsynchronouslyC
 
 Route::get('/getApiSynchronously', "App\\Http\\Controllers\\ApiGetSynchronouslyController");
 Route::get('/getDBSynchronously', "App\\Http\\Controllers\\DBGetSynchronouslyController");
+Route::get('/getMailSynchronously', "App\\Http\\Controllers\\MailGetSynchronouslyController");
+
 
 Route::get('/', function () {
     return view("welcome");
