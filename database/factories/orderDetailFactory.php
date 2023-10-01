@@ -21,32 +21,42 @@ class orderDetailFactory extends Factory
      */
     public function definition(): array
     {
-
-//        return [
-//            'quantity' => fake()->numberBetween(1, 10),
-//            'orderId' => Order::factory(),
-//            'productId' => Product::factory(),
-//        ];
-
         $createNewOrderRandom = rand(0, 1000) / 1000;
         if (DB::table('offices')->count() === 0) {
             $createNewOrderRandom = 0;
         }
 
-        if ($createNewOrderRandom < 0.1) {
+        if ($createNewOrderRandom < 0.05) {
             return [
                 'quantity' => fake()->numberBetween(1, 10),
                 'productId' => Product::factory(),
                 'orderId' => Order::factory(),
             ];
         } else {
-            return [
-                'quantity' => fake()->numberBetween(1, 10),
-                'productId' => Product::factory(),
-                'orderId' => function () {
-                    return DB::table('orders')->orderBy('id', 'desc')->first()->id;
-                },
-            ];
+            $createNewProductRandom = rand(0, 1000) / 1000;
+            if (DB::table('products')->count() === 0) {
+                $createNewProductRandom = 0;
+            }
+
+            if ($createNewProductRandom < 0.2) {
+                return [
+                    'quantity' => fake()->numberBetween(1, 10),
+                    'productId' => Product::factory(),
+                    'orderId' => function () {
+                        return DB::table('orders')->orderBy('id', 'desc')->first()->id;
+                    },
+                ];
+            } else {
+                return [
+                    'quantity' => fake()->numberBetween(1, 10),
+                    'productId' => function () {
+                        return DB::table('products')->orderBy('id', 'desc')->first()->id;
+                    },
+                    'orderId' => function () {
+                        return DB::table('orders')->orderBy('id', 'desc')->first()->id;
+                    },
+                ];
+            }
         }
     }
 }
