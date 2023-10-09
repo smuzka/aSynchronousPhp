@@ -10,7 +10,7 @@ use http\Client;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
-class ApiGetPromisesController
+class DBGetPromisesController
     {
         public function __invoke() {
 
