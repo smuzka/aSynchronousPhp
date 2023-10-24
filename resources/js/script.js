@@ -35,7 +35,7 @@ addEventListener("load", () => {
     }
 
     const PromisesApiHandler = () => {
-        const promisesButton = document.querySelector(".promises-button");
+        const promisesButton = document.querySelector(".promises-button-api");
         let promisesTimeStart = Date.now();
         promisesButton?.addEventListener("click", async () => {
             promisesTimeStart = Date.now();
@@ -100,4 +100,5 @@ addEventListener("load", () => {
     SynchronousApiHandler();
     SynchronousDBHandler();
     SynchronousMailHandler();
+    PromisesApiHandler();
 })

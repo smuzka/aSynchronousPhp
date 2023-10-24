@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Http;
 
 class getApiEvent implements ShouldBroadcast
 {
@@ -19,8 +20,14 @@ class getApiEvent implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct($imageSrc)
+    public function __construct($imageSrc, $currentFolder)
     {
+        $this->imageSrc = Http::withHeaders([
+            'Authorization' => 'auZTe7rY3pgsoz3IiF4NkuiCllqhmfJE6OeGqzDDqISsmMjWINUN3gJT'
+        ])->get($imageSrc);
+
+        imagejpeg(imagecreatefromstring($this->imageSrc), $currentFolder . "/" . rand() . ".jpg");
+
         $this->imageSrc = $imageSrc;
     }
 

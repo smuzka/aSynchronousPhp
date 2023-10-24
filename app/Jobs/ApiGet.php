@@ -11,7 +11,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class ApiGet implements ShouldQueue
 {
@@ -22,11 +24,13 @@ class ApiGet implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct($photoUrl)
+    public function __construct($photoUrl, $currentFolder)
     {
         $this->imageSrc = Http::withHeaders([
             'Authorization' => 'auZTe7rY3pgsoz3IiF4NkuiCllqhmfJE6OeGqzDDqISsmMjWINUN3gJT'
         ])->get($photoUrl);
+
+        imagejpeg(imagecreatefromstring($this->imageSrc), $currentFolder . "/" . rand() . ".jpg");
     }
 
     /**
