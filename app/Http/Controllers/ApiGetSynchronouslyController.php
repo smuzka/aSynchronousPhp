@@ -18,15 +18,9 @@ class ApiGetSynchronouslyController
     {
         public function __invoke() {
 
-
             $response = Http::withHeaders([
                 "Authorization" => "auZTe7rY3pgsoz3IiF4NkuiCllqhmfJE6OeGqzDDqISsmMjWINUN3gJT"
             ])->get('https://api.pexels.com/v1/search?query=people');
-
-            $client = new Client();
-            $headers = [
-                'Authorization' => 'auZTe7rY3pgsoz3IiF4NkuiCllqhmfJE6OeGqzDDqISsmMjWINUN3gJT',
-            ];
 
             $images = [];
 
@@ -34,13 +28,18 @@ class ApiGetSynchronouslyController
 
             File::makeDirectory($currentFolder);
 
+            function saveImageToFile($image, $currentFolder, $index) {
+                imagejpeg(imagecreatefromstring($image), $currentFolder . "/" . $index . ".jpg");
+            };
+
             foreach ($response['photos'] as $index => $photo) {
                 $images[] = Http::withHeaders([
                     'Authorization' => 'auZTe7rY3pgsoz3IiF4NkuiCllqhmfJE6OeGqzDDqISsmMjWINUN3gJT'
                 ])->get($photo['src']['original']);
 
-                imagejpeg(imagecreatefromstring($images[count($images) - 1]), $currentFolder . "/" . $index . ".jpg");
+                saveImageToFile($images[count($images) - 1], $currentFolder, $index);
 
+                \App\Events\sendMessageEvent::dispatch("Got its");
             }
 
 

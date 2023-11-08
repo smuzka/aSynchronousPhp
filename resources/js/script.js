@@ -3,35 +3,50 @@ addEventListener("load", () => {
 
     const AsynchronousApiHandler = () => {
         const ApiAsyncButton = document.querySelector(".a-sync-button-api")
-        let imagesCounter = 0;
+        let asyncImagesCounter = 0;
         let ApiAsyncTimeStart;
         ApiAsyncButton?.addEventListener("click", async () => {
             const response = fetch("getApiAsynchronously");
-            imagesCounter = 0;
+            asyncImagesCounter = 0;
             ApiAsyncTimeStart = Date.now();
         })
 
-        Echo.channel('getApiChannel')
+        Echo.channel('asyncChannel')
             .listen('getApiEvent', (e) => {
-                console.log(e);
-                imagesCounter++;
-                if (imagesCounter === 15) {
+                console.log((Date.now() - ApiAsyncTimeStart) / 1000 + "s");
+                asyncImagesCounter++;
+                if (asyncImagesCounter === 15) {
                     console.log("Api Asynchronous get: " + (Date.now() - ApiAsyncTimeStart) / 1000 + "s");
-
                 }
             })
     }
 
     const SynchronousApiHandler = () => {
         const ApiSyncButton = document.querySelector(".sync-button-api")
+        let synchronousImagesCounter = 0;
         let ApiSyncTimeStart;
         ApiSyncButton?.addEventListener("click", async () => {
+            const response = fetch("getApiSynchronously");
+            synchronousImagesCounter = 0;
             ApiSyncTimeStart = Date.now();
-            const response = await fetch("getApiSynchronously");
-            const data = await response.json();
-            console.log(data);
-            console.log("Api Synchronous get: " + (Date.now() - ApiSyncTimeStart) / 1000 + "s");
         })
+
+        Echo.channel('syncChannel')
+            .listen('sendMessageEvent', (e) => {
+                console.log((Date.now() - ApiSyncTimeStart) / 1000 + "s");
+                synchronousImagesCounter++;
+                if (synchronousImagesCounter === 15) {
+                    console.log("Api Synchronous get: " + (Date.now() - ApiSyncTimeStart) / 1000 + "s");
+                }
+            })
+
+        // ApiSyncButton?.addEventListener("click", async () => {
+        //     ApiSyncTimeStart = Date.now();
+        //     const response = await fetch("getApiSynchronously");
+        //     const data = await response.json();
+        //     console.log(data);
+        //     console.log("Api Synchronous get: " + (Date.now() - ApiSyncTimeStart) / 1000 + "s");
+        // })
     }
 
     const PromisesApiHandler = () => {
@@ -56,7 +71,7 @@ addEventListener("load", () => {
             DBAsyncTimeStart = Date.now();
         })
 
-        Echo.channel('getDBChannel')
+        Echo.channel('asyncChannel')
             .listen('getDBEvent', (e) => {
                 console.log(e);
                 queryCounter++;

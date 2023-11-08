@@ -12,8 +12,6 @@ class ApiGetAsynchronouslyController
     {
         public function __invoke() {
 
-//            ToDo implement horizon
-
             $response = Http::withHeaders([
                 "Authorization" => "auZTe7rY3pgsoz3IiF4NkuiCllqhmfJE6OeGqzDDqISsmMjWINUN3gJT"
             ])->get('https://api.pexels.com/v1/search?query=people');
@@ -22,9 +20,7 @@ class ApiGetAsynchronouslyController
             File::makeDirectory($currentFolder);
 
             foreach ($response['photos'] as $photo) {
-//                \App\Jobs\ApiGet::dispatch($photo['src']['original'], $currentFolder);
-                \App\Events\getApiEvent::dispatch($photo['src']['tiny'], $currentFolder);
-
+                \App\Events\getApiEvent::dispatch($photo['src']['original'], $currentFolder);
             }
 
             return "test apiget";

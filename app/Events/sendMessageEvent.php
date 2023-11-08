@@ -6,25 +6,23 @@ use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Http;
 
-class getDBEvent implements ShouldBroadcast
+class sendMessageEvent implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels, Queueable;
+    use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $queryResult;
+    public $dataToSend;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($data)
+    public function __construct($dataToSend)
     {
-        $this->onQueue(array_rand(['queue1', 'queue2', 'queue3']));
-
-        $this->queryResult = $data;
+        $this->$dataToSend = $dataToSend;
     }
 
     /**
@@ -34,6 +32,6 @@ class getDBEvent implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        return ['asyncChannel'];
+        return ['syncChannel'];
     }
 }
