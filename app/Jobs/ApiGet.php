@@ -19,18 +19,21 @@ class ApiGet implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $imageSrc;
-
+    public $imageUrl;
+    public $currentFolder;
+    public $index;
     /**
      * Create a new job instance.
      */
-    public function __construct($photoUrl, $currentFolder)
+    public function __construct($imageUrl, $currentFolder, $index)
     {
-        $this->imageSrc = Http::withHeaders([
-            'Authorization' => 'auZTe7rY3pgsoz3IiF4NkuiCllqhmfJE6OeGqzDDqISsmMjWINUN3gJT'
-        ])->get($photoUrl);
+        $this->imageUrl = $imageUrl;
+        $this->currentFolder = $currentFolder;
+        $this->index = $index;
 
-        imagejpeg(imagecreatefromstring($this->imageSrc), $currentFolder . "/" . rand() . ".jpg");
+        $queuesArray = ['queue1', 'queue2', 'queue3'];
+        $randomQueueIndex = array_rand($queuesArray);
+        $this->onQueue($queuesArray[$randomQueueIndex]);
     }
 
     /**
@@ -38,7 +41,14 @@ class ApiGet implements ShouldQueue
      */
     public function handle()
     {
-        \App\Events\getApiEvent::dispatch($this->imageSrc);
+        $imageSrc = Http::withHeaders([
+            'Authorization' => 'auZTe7rY3pgsoz3IiF4NkuiCllqhmfJE6OeGqzDDqISsmMjWINUN3gJT'
+        ])->get($this->imageUrl);
+
+        imagejpeg(imagecreatefromstring($imageSrc), public_path() . "/" . $this->currentFolder . "/" . $this->index . ".jpg");
+
+        \App\Events\getApiEvent::dispatch("test");
+
         return 0;
     }
 }

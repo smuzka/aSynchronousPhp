@@ -5,8 +5,14 @@
 //    use App\Jobs\ApiGet;
 
 
+use App\Events\getApiEvent;
+use App\Jobs\ApiGet;
+use App\Jobs\testJob;
+use DateTime;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class ApiGetAsynchronouslyController
     {
@@ -16,11 +22,16 @@ class ApiGetAsynchronouslyController
                 "Authorization" => "auZTe7rY3pgsoz3IiF4NkuiCllqhmfJE6OeGqzDDqISsmMjWINUN3gJT"
             ])->get('https://api.pexels.com/v1/search?query=people');
 
-            $currentFolder = "async-" . now();
+            $currentFolder = "async-" . now()->format("Y-m-d,H-m-s");
             File::makeDirectory($currentFolder);
 
-            foreach ($response['photos'] as $photo) {
-                \App\Events\getApiEvent::dispatch($photo['src']['original'], $currentFolder);
+            $jobs = [];
+            foreach ($response['photos'] as $index => $photo) {
+//                Log::info("loop iteration start: " . microtime());
+
+//                Log::info("loop iteration end: " . microtime());
+                \App\Events\getApiEvent::dispatch("test");
+
             }
 
             return "test apiget";

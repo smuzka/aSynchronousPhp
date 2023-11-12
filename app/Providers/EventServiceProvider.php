@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Events\getApiEvent;
+use App\Events\getApiEvent1;
 use App\Listeners\UpdateWebsiteAboutGetApi;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;

@@ -14,7 +14,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
-class getApiEvent implements ShouldBroadcast, ShouldQueue
+class getApiEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels, Queueable;
 
@@ -23,17 +23,12 @@ class getApiEvent implements ShouldBroadcast, ShouldQueue
     /**
      * Create a new event instance.
      */
-    public function __construct($imageUrl, $currentFolder)
+    public function __construct($imageSrc)
     {
+        $this->imageSrc = $imageSrc;
         $queuesArray = ['queue1', 'queue2', 'queue3'];
         $randomQueueIndex = array_rand($queuesArray);
         $this->onQueue($queuesArray[$randomQueueIndex]);
-
-        $this->imageSrc = Http::withHeaders([
-            'Authorization' => 'auZTe7rY3pgsoz3IiF4NkuiCllqhmfJE6OeGqzDDqISsmMjWINUN3gJT'
-        ])->get($imageUrl);
-
-        imagejpeg(imagecreatefromstring($this->imageSrc), $currentFolder . "/" . rand() . ".jpg");
     }
 
     /**

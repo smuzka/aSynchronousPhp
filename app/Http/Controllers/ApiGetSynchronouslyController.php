@@ -28,27 +28,15 @@ class ApiGetSynchronouslyController
 
             File::makeDirectory($currentFolder);
 
-            function saveImageToFile($image, $currentFolder, $index) {
-                imagejpeg(imagecreatefromstring($image), $currentFolder . "/" . $index . ".jpg");
-            };
-
             foreach ($response['photos'] as $index => $photo) {
                 $images[] = Http::withHeaders([
                     'Authorization' => 'auZTe7rY3pgsoz3IiF4NkuiCllqhmfJE6OeGqzDDqISsmMjWINUN3gJT'
                 ])->get($photo['src']['original']);
 
-                saveImageToFile($images[count($images) - 1], $currentFolder, $index);
+                imagejpeg(imagecreatefromstring($images[count($images) - 1]), $currentFolder . "/" . $index . ".jpg");
 
-                \App\Events\sendMessageEvent::dispatch("Got its");
+                \App\Events\sendMessageEvent::dispatch("Got this");
             }
-
-
-
-
-
-//            Storage::disk('public')->put("test", $img);
-
-
 
             return $images;
         }

@@ -22,7 +22,9 @@ class getDBEvent implements ShouldBroadcast
      */
     public function __construct($data)
     {
-        $this->onQueue(array_rand(['queue1', 'queue2', 'queue3']));
+        $queuesArray = ['queue1', 'queue2', 'queue3'];
+        $randomQueueIndex = array_rand($queuesArray);
+        $this->onQueue($queuesArray[$randomQueueIndex]);
 
         $this->queryResult = $data;
     }
