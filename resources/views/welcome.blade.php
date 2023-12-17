@@ -25,17 +25,17 @@
         <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; row-gap: 15px;" class="relative min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
 
                 <h1 style="color: white; font-size: 24px; font-weight: 600;">API requests</h1>
-                <button class="a-sync-button-api" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Async</b> request</button>
-                <button class="sync-button-api" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Sync</b> request</button>
-                <button class="promises-button-api" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Promises</b> request</button>
+                <button class="button a-sync-button-api" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Async</b> request</button>
+                <button class="button sync-button-api" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Sync</b> request</button>
+                <button class="button promises-button-api" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Promises</b> request</button>
 
                 <h1 style="color: white; font-size: 24px; margin-top: 50px; font-weight: 600;">Database queries requests</h1>
-                <button class="a-sync-button-db" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Async</b> request</button>
-                <button class="sync-button-db" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Sync</b> request</button>
+                <button class="button a-sync-button-db" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Async</b> request</button>
+                <button class="button sync-button-db" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Sync</b> request</button>
 
                 <h1 style="color: white; font-size: 24px; margin-top: 50px; font-weight: 600;">Mail sending requests</h1>
-                <button class="a-sync-button-mail" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Async</b> request</button>
-                <button class="sync-button-mail" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Sync</b> request</button>
+                <button class="button a-sync-button-mail" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Async</b> request</button>
+                <button class="button sync-button-mail" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Sync</b> request</button>
 
         </div>
     </body>
