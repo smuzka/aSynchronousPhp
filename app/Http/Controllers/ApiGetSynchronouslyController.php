@@ -2,24 +2,15 @@
 
     namespace App\Http\Controllers;
 
-//    use App\Jobs\ApiGet;
+    use Illuminate\Support\Facades\File;
+    use Illuminate\Support\Facades\Http;
 
-
-use GuzzleHttp\Client;
-use GuzzleHttp\Promise\Utils;
-use GuzzleHttp\Psr7\Request;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use Symfony\Component\ErrorHandler\Debug;
-
-class ApiGetSynchronouslyController
+    class ApiGetSynchronouslyController
     {
         public function __invoke() {
 
-            $response = Http::withHeaders([
-                "Authorization" => "auZTe7rY3pgsoz3IiF4NkuiCllqhmfJE6OeGqzDDqISsmMjWINUN3gJT"
+            $imagesUrls = Http::withHeaders([
+                "Authorization" => getenv("PEXELS_API_KEY")
             ])->get('https://api.pexels.com/v1/search?query=people');
 
             $images = [];
@@ -28,14 +19,14 @@ class ApiGetSynchronouslyController
 
             File::makeDirectory($currentFolder);
 
-            foreach ($response['photos'] as $index => $photo) {
+            foreach ($imagesUrls['photos'] as $index => $photo) {
                 $images[] = Http::withHeaders([
-                    'Authorization' => 'auZTe7rY3pgsoz3IiF4NkuiCllqhmfJE6OeGqzDDqISsmMjWINUN3gJT'
+                    'Authorization' => getenv("PEXELS_API_KEY")
                 ])->get($photo['src']['original']);
 
                 imagejpeg(imagecreatefromstring($images[count($images) - 1]), $currentFolder . "/" . $index . ".jpg");
 
-                \App\Events\sendMessageEvent::dispatch("Got this");
+                \App\Events\sendMessageEvent::dispatch("Image downloaded");
             }
 
             return $images;

@@ -42,12 +42,16 @@ class ApiGet implements ShouldQueue
     public function handle()
     {
         $imageSrc = Http::withHeaders([
-            'Authorization' => 'auZTe7rY3pgsoz3IiF4NkuiCllqhmfJE6OeGqzDDqISsmMjWINUN3gJT'
+            'Authorization' => getenv("PEXELS_API_KEY")
         ])->get($this->imageUrl);
 
         imagejpeg(imagecreatefromstring($imageSrc), public_path() . "/" . $this->currentFolder . "/" . $this->index . ".jpg");
 
-        \App\Events\getApiEvent::dispatch("test");
+        $milliseconds = floor(microtime(true) * 1000);
+        Log::info("success - " . $this->index);
+        Log::info($milliseconds);
+
+        \App\Events\getApiEvent::dispatch("Ok");
 
         return 0;
     }
