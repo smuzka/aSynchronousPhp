@@ -73,7 +73,7 @@ addEventListener("load", () => {
 
         Echo.channel('asyncChannel')
             .listen('getDBEvent', (e) => {
-                console.log((Date.now() - ApiPromisesTimeStart) / 1000 + "s");
+                console.log((Date.now() - DBAsyncTimeStart) / 1000 + "s");
 
                 queryCounter++;
                 if (queryCounter === 10) {
@@ -84,14 +84,24 @@ addEventListener("load", () => {
 
     const SynchronousDBHandler = () => {
         const DBSyncButton = document.querySelector(".sync-button-db")
+        let syncQueryCounter = 0;
         let DBSyncTimeStart;
+
         DBSyncButton?.addEventListener("click", async () => {
             DBSyncTimeStart = Date.now();
-            const response = await fetch("getDBSynchronously");
-            const data = await response.json();
-            console.log(data);
-            console.log("DB Synchronous get: " + (Date.now() - DBSyncTimeStart) / 1000 + "s");
+            syncQueryCounter = 0;
+            const response = fetch("getDBSynchronously");
         })
+
+        Echo.channel('asyncChannel')
+            .listen('getDBSyncEvent', (e) => {
+                console.log((Date.now() - DBSyncTimeStart) / 1000 + "s");
+
+                syncQueryCounter++;
+                if (syncQueryCounter === 10) {
+                    console.log("DB Synchronous get: " + (Date.now() - DBSyncTimeStart) / 1000 + "s");
+                }
+            })
     }
 
     const AsynchronousMailHandler = () => {
