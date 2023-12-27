@@ -6,9 +6,9 @@ addEventListener("load", () => {
         let asyncImagesCounter = 0;
         let ApiAsyncTimeStart;
         ApiAsyncButton?.addEventListener("click", async () => {
-            const response = fetch("getApiAsynchronously");
             asyncImagesCounter = 0;
             ApiAsyncTimeStart = Date.now();
+            const response = fetch("getApiAsynchronously");
         })
 
         Echo.channel('asyncChannel')
@@ -26,9 +26,9 @@ addEventListener("load", () => {
         let synchronousImagesCounter = 0;
         let ApiSyncTimeStart;
         ApiSyncButton?.addEventListener("click", async () => {
-            const response = fetch("getApiSynchronously");
             synchronousImagesCounter = 0;
             ApiSyncTimeStart = Date.now();
+            const response = fetch("getApiSynchronously");
         })
 
         Echo.channel('syncChannel')
@@ -39,26 +39,26 @@ addEventListener("load", () => {
                     console.log("Api Synchronous get: " + (Date.now() - ApiSyncTimeStart) / 1000 + "s");
                 }
             })
-
-        // ApiSyncButton?.addEventListener("click", async () => {
-        //     ApiSyncTimeStart = Date.now();
-        //     const response = await fetch("getApiSynchronously");
-        //     const data = await response.json();
-        //     console.log(data);
-        //     console.log("Api Synchronous get: " + (Date.now() - ApiSyncTimeStart) / 1000 + "s");
-        // })
     }
 
     const PromisesApiHandler = () => {
         const promisesButton = document.querySelector(".promises-button-api");
-        let promisesTimeStart = Date.now();
+        let promisesImagesCounter = 0;
+        let ApiPromisesTimeStart;
         promisesButton?.addEventListener("click", async () => {
-            promisesTimeStart = Date.now();
+            ApiPromisesTimeStart = Date.now();
+            promisesImagesCounter = 0;
             const response = await fetch("getApiPromises");
-            const data = await response.json();
-            console.log(data);
-            console.log("Promises get: " + (Date.now() - promisesTimeStart) / 1000 + "s");
         })
+
+        Echo.channel('asyncChannel')
+            .listen('promisesMessageEvent', (e) => {
+                console.log((Date.now() - ApiPromisesTimeStart) / 1000 + "s");
+                promisesImagesCounter++;
+                if (promisesImagesCounter === 15) {
+                    console.log("Api Promises get: " + (Date.now() - ApiPromisesTimeStart) / 1000 + "s");
+                }
+            })
     }
 
     const AsynchronousDBHandler = () => {
@@ -66,14 +66,15 @@ addEventListener("load", () => {
         let queryCounter = 0;
         let DBAsyncTimeStart;
         DBAsyncButton?.addEventListener("click", async () => {
-            const response = fetch("getDBAsynchronously");
-            queryCounter = 0;
             DBAsyncTimeStart = Date.now();
+            queryCounter = 0;
+            const response = fetch("getDBAsynchronously");
         })
 
         Echo.channel('asyncChannel')
             .listen('getDBEvent', (e) => {
-                console.log(e);
+                console.log((Date.now() - ApiPromisesTimeStart) / 1000 + "s");
+
                 queryCounter++;
                 if (queryCounter === 10) {
                     console.log("DB Asynchronous get: " + (Date.now() - DBAsyncTimeStart) / 1000 + "s");

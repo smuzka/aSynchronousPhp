@@ -12,7 +12,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
 
-class sendMessageEvent implements ShouldBroadcast
+class promisesMessageEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels, Queueable;
 
@@ -36,6 +36,6 @@ class sendMessageEvent implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        return ['syncChannel'];
+        return ['asyncChannel'];
     }
 }
