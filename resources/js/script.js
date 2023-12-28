@@ -105,19 +105,47 @@ addEventListener("load", () => {
     }
 
     const AsynchronousMailHandler = () => {
+        const MailAsyncButton = document.querySelector(".a-sync-button-mail")
+        let asyncMailCounter = 0;
+        let MailAsyncTimeStart;
 
+        MailAsyncButton?.addEventListener("click", async () => {
+            MailAsyncTimeStart = Date.now();
+            asyncMailCounter = 0;
+            const response = fetch("getMailAsynchronously");
+        })
+
+        Echo.channel('asyncChannel')
+            .listen('sendMailEventAsync', (e) => {
+                console.log((Date.now() - MailAsyncTimeStart) / 1000 + "s");
+
+                asyncMailCounter++;
+                if (asyncMailCounter === 10) {
+                    console.log("Mail Synchronous send: " + (Date.now() - MailAsyncTimeStart) / 1000 + "s");
+                }
+            })
     }
 
     const SynchronousMailHandler = () => {
         const MailSyncButton = document.querySelector(".sync-button-mail")
+        let syncMailCounter = 0;
         let MailSyncTimeStart;
+
         MailSyncButton?.addEventListener("click", async () => {
             MailSyncTimeStart = Date.now();
-            const response = await fetch("getMailSynchronously");
-            const data = await response.json();
-            console.log(data);
-            console.log("Mail Synchronous get: " + (Date.now() - MailSyncTimeStart) / 1000 + "s");
+            syncMailCounter = 0;
+            const response = fetch("getMailSynchronously");
         })
+
+        Echo.channel('syncChannel')
+            .listen('sendMailEvent', (e) => {
+                console.log((Date.now() - MailSyncTimeStart) / 1000 + "s");
+
+                syncMailCounter++;
+                if (syncMailCounter === 10) {
+                    console.log("Mail Synchronous send: " + (Date.now() - MailSyncTimeStart) / 1000 + "s");
+                }
+            })
     }
 
     AsynchronousApiHandler();

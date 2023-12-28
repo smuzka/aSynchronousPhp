@@ -34,8 +34,8 @@
                 <button class="button a-sync-button-db" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Async</b> request</button>
 
                 <h1 style="color: white; font-size: 24px; margin-top: 50px; font-weight: 600;">Mail sending requests</h1>
-                <button class="button a-sync-button-mail" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Async</b> request</button>
                 <button class="button sync-button-mail" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Sync</b> request</button>
+                <button class="button a-sync-button-mail" type="button" style="padding: 5px 10px; background-color: white; color: black">Make <b>Async</b> request</button>
 
         </div>
     </body>

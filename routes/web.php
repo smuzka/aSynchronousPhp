@@ -7,6 +7,7 @@
 
 Route::get('/getApiAsynchronously', "App\\Http\\Controllers\\ApiGetAsynchronouslyController");
 Route::get('/getDBAsynchronously', "App\\Http\\Controllers\\DBGetAsynchronouslyController");
+Route::get('/getMailAsynchronously', "App\\Http\\Controllers\\MailGetAsynchronouslyController");
 
 
 Route::get('/getApiSynchronously', "App\\Http\\Controllers\\ApiGetSynchronouslyController");
