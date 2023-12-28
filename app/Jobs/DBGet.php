@@ -24,6 +24,9 @@ class DBGet implements ShouldQueue
      */
     public function __construct()
     {
+        $queuesArray = ['queue1', 'queue2', 'queue3'];
+        $randomQueueIndex = array_rand($queuesArray);
+        $this->onQueue($queuesArray[$randomQueueIndex]);
     }
 
     /**
