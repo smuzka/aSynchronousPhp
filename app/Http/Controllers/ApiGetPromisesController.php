@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 
 use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\Utils;
+use Illuminate\Http\Client\Pool;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -15,25 +16,29 @@ class ApiGetPromisesController
 {
     public function __invoke()
     {
+
         $responseWithImagesLinks = Http::withHeaders([
             "Authorization" => getenv("PEXELS_API_KEY")
         ])->get('https://api.pexels.com/v1/search?query=people');
 
-        $requestPromises = [];
-
         $currentFolder = "promises-" . now();
         File::makeDirectory($currentFolder);
 
-        foreach ($responseWithImagesLinks['photos'] as $index => $photo) {
-            $promise = Http::async()->get($photo['src']['original'])->then(function ($response) use ($currentFolder, $index) {
-                Log::info($index);
-                Log::info(date("Y-m-d, h:i:s", time()));
-                imagejpeg(imagecreatefromstring($response), $currentFolder . "/" . $index . ".jpg");
-                \App\Events\promisesMessageEvent::dispatch("Ok");
-            });
+        $requestPromises = Http::pool(function (Pool $pool) use ($responseWithImagesLinks, $currentFolder) {
 
-            $requestPromises[] = $promise;
-        }
+            $promises = [];
+
+            foreach ($responseWithImagesLinks['photos'] as $index => $photo) {
+                $promises [] = $pool
+                    ->get($photo['src']['original'])
+                    ->then(function ($response) use ($index, $currentFolder) {
+                        imagejpeg(imagecreatefromstring($response), $currentFolder . "/" . $index . ".jpg");
+                        \App\Events\promisesMessageEvent::dispatch("Ok");
+                    });
+            }
+
+            return $promises;
+        });
 
         Utils::all($requestPromises)
             ->wait();
